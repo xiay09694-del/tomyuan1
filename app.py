@@ -19,9 +19,23 @@ def dbs():
 @app.route("/DbsPrediction", methods=["GET","POST"])
 def DbsPrediction():
     q= float(request.form.get("q"))
-    model = joblib.load("dbs(1).ji")
+    model = joblib.load("dbs (2).jl")
     r = model.predict([[q]])
     return(render_template("DbsPrediction.html",r=r))
+@app.route("/credit",methods=["GET","POST"])  
+def credit(): 
+    return(render_template("credit.html")) 
+
+@app.route("/creditPrediction",methods=["GET","POST"])  
+def creditPrediction(): 
+    q = float(request.form.get("q"))
+    model=joblib.load("/workspaces/tomyuan1/credit_model.pkl")
+    r=model.predict([[q]])
+    if r==1:
+        r="Approved"
+    else:
+        r="Not Approved"
+    return(render_template("creditPrediction.html",r=r))
 
 if __name__ == "__main__":
     app.run()
